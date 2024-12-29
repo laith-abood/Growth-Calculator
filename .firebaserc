@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "bdi-trades-services"
+  },
+  "targets": {
+    "bdi-trades-services": {
+      "hosting": {
+        "production": [
+          "bdi-trades-services"
+        ],
+        "staging": [
+          "bdi-trades-services-staging"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

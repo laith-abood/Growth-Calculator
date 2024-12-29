@@ -1,0 +1,69 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isValidImage() {
+      return request.resource.contentType.matches('image/.*')
+        && request.resource.size < 5 * 1024 * 1024; // 5MB
+    }
+    
+    function isValidDocument() {
+      return request.resource.contentType.matches('application/pdf')
+        && request.resource.size < 10 * 1024 * 1024; // 10MB
+    }
+
+    // User profile images
+    match /users/{userId}/profile/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) && isValidImage();
+    }
+    
+    // Agency logos
+    match /agencies/{agencyId}/logo/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidImage();
+    }
+    
+    // Policy documents
+    match /policies/{policyId}/documents/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isValidDocument();
+    }
+    
+    // Public assets
+    match /public/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // Temporary uploads
+    match /temp/{userId}/{fileName} {
+      allow read, write: if isOwner(userId);
+      
+      // Auto-delete after 24 hours
+      match /{allPaths=**} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+    
+    // Catch-all rule
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
