@@ -1,131 +1,155 @@
-# Medicare LOA Agency Growth Calculator
+# Growth Calculator
 
-An interactive tool for valuing and analyzing Medicare Licensed Only Agent agencies. Built with Next.js 13, TypeScript, and Tailwind CSS.
+A comprehensive business growth and valuation calculator built with Next.js 13+.
 
 ## Features
 
-- Real-time agency valuation calculations
-- Interactive growth projections over 24 months
-- Policy retention analysis
-- Revenue breakdown by policy type
-- Dark mode optimized UI
-- Responsive design with mobile support
+- 📊 Growth Projections
+- 💰 Valuation Metrics
+- 📈 Analytics Dashboard
+- 👥 Client Management
+- ⚙️ Customizable Settings
+- 🔒 Secure Authentication
+- 🌙 Dark Mode Support
 
 ## Tech Stack
 
-- **Framework:** Next.js 13 (App Router)
-- **Language:** TypeScript
+- **Framework:** Next.js 13+ (App Router)
 - **Styling:** Tailwind CSS
-- **State Management:** Zustand
-- **Charts:** Recharts
 - **UI Components:** Radix UI
-- **Theme:** Custom dark theme with CSS variables
-- **Forms:** React Hook Form + Zod
+- **Authentication:** Firebase Auth
+- **Database:** Firestore
+- **State Management:** Custom Hooks
+- **Forms:** React Hook Form
+- **Charts:** Recharts
 
 ## Project Structure
 
 ```
-├── app/                      # Next.js app directory
-│   ├── dashboard/           # Dashboard page
-│   ├── globals.css         # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── providers.tsx      # App providers
-├── components/             # React components
-│   ├── dashboard/         # Dashboard-specific components
-│   └── ui/               # Reusable UI components
-├── lib/                   # Application logic
-│   ├── hooks/            # Custom hooks
-│   ├── theme/            # Theme configuration
-│   ├── types/            # TypeScript types
-│   └── utils/            # Utility functions
-└── public/               # Static assets
+├── app/                   # Next.js 13 App Router
+│   ├── analytics/        # Analytics pages
+│   ├── clients/          # Client management
+│   ├── dashboard/        # Main dashboard
+│   ├── projections/      # Growth projections
+│   ├── settings/         # User settings
+│   └── valuation/        # Valuation tools
+├── components/
+│   ├── shared/          # Reusable UI components
+│   └── features/        # Feature-specific components
+│       ├── analytics/   # Analytics components
+│       └── contact/     # Contact form components
+├── lib/
+│   ├── firebase/        # Firebase configuration
+│   ├── hooks/           # Custom React hooks
+│   ├── utils/           # Utility functions
+│   └── types/           # TypeScript types
+└── public/              # Static assets
 ```
 
 ## Getting Started
 
 1. Clone the repository:
-   ```bash
-   git clone [repository-url]
-   ```
+\`\`\`bash
+git clone https://github.com/yourusername/growth-calculator.git
+\`\`\`
 
 2. Install dependencies:
-   ```bash
-   npm install
-   ```
+\`\`\`bash
+npm install
+\`\`\`
 
-3. Run the development server:
-   ```bash
-   npm run dev
-   ```
+3. Set up environment variables:
+\`\`\`bash
+cp .env.example .env.local
+\`\`\`
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Start the development server:
+\`\`\`bash
+npm run dev
+\`\`\`
 
-## Key Components
+## Environment Variables
 
-### Dashboard Components
+Required environment variables:
 
-- **GrowthProjections:** Interactive charts for policy growth visualization
-- **ValuationMetrics:** Financial metrics and valuation analysis
-- **PolicyInputs:** Configuration for policy counts and commission rates
+\`\`\`
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+FIREBASE_ADMIN_PROJECT_ID=
+FIREBASE_ADMIN_CLIENT_EMAIL=
+FIREBASE_ADMIN_PRIVATE_KEY=
+\`\`\`
 
-### Core Features
+## Component Documentation
 
-- Real-time calculations for agency valuation
-- Dynamic growth projections based on user inputs
-- Policy retention analysis and breakdown
-- Revenue forecasting by policy type
-- Interactive data visualization
+### Shared Components
 
-## State Management
+Located in `components/shared/`:
 
-The application uses Zustand for state management with two main stores:
+- `Button`: Customizable button component with variants
+- `Card`: Container component with consistent styling
+- `Input`: Form input component with validation
+- `Table`: Data table component with sorting
+- `Toast`: Notification system
+- `Toaster`: Toast notification manager
 
-- **AgencyStore:** Manages policy data and agency metrics
-- **ProjectionsStore:** Handles growth projections and calculations
+### Feature Components
 
-## Theme System
+Located in `components/features/`:
 
-Custom theme implementation with:
+#### Analytics
+- `MetricsGrid`: Display key metrics in a grid layout
+- `TrendChart`: Visualize trends over time
+- `DataTable`: Interactive data table with filtering
+- `Filters`: Data filtering controls
 
-- CSS variables for dynamic values
-- Dark mode optimization
-- Consistent color palette
-- Responsive design utilities
-- Accessibility considerations
+#### Contact
+- `ContactForm`: Contact form with validation
 
-## Development Guidelines
+## API Documentation
 
-1. **TypeScript:**
-   - Use strict type checking
-   - Define interfaces for all data structures
-   - Avoid any type when possible
+### Firebase Authentication
 
-2. **Components:**
-   - Keep components focused and single-responsibility
-   - Use composition over inheritance
-   - Implement proper error boundaries
-   - Add loading states for async operations
+Authentication methods available:
+- Email/Password
+- Google Sign-In
+- Magic Link (Passwordless)
 
-3. **Styling:**
-   - Use Tailwind CSS utilities
-   - Follow BEM naming for custom CSS
-   - Maintain consistent spacing scale
-   - Ensure responsive design
+### Firestore Collections
 
-4. **Performance:**
-   - Implement proper memoization
-   - Optimize re-renders
-   - Use dynamic imports for code splitting
-   - Monitor bundle size
+- `users`: User profiles and settings
+- `clients`: Client information
+- `projections`: Growth projection data
+- `valuations`: Valuation calculations
+
+## Custom Hooks
+
+Located in `lib/hooks/`:
+
+- `useAuth`: Authentication state management
+- `useApiKeys`: API key management
+- `useChartConfig`: Chart configuration
+- `useScenariosStore`: Scenario management
+
+## Utility Functions
+
+Located in `lib/utils/`:
+
+- `calculations.ts`: Financial calculations
+- `format.ts`: Data formatting utilities
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch
+2. Create a feature branch
 3. Commit your changes
 4. Push to the branch
-5. Create a new Pull Request
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License - see LICENSE file for details
